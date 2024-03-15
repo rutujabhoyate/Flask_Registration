@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h2>Logout</h2>
+    <a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('delegate_email')
+        password = request.form.get('delegate_passcode')
+
+        # Check if username or password is empty
+        if not username or not password:
+            error_message = 'Please enter both username and password'
+            return render_template('login.html', error=error_message, error_class="text-danger")
+
+        user = User.query.filter_by(delegate_email=username, delegate_passcode=password).first()
+
+        if user:
+            session['user_id'] = user.id
+            return redirect(url_for('user_home'))
+        else:
+            error_message = ''
+            if not User.query.filter_by(delegate_email=username).first():
+                error_message += 'Invalid username. '
+            if not User.query.filter_by(delegate_passcode=password).first():
+                error_message += 'Invalid password. '
+
+            return render_template('login.html', error=error_message.strip(), error_class="text-danger")
+

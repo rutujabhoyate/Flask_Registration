@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Delegate_tracker{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('/static/wallpaper.jpg');
+            background-size: cover;
+            background-position: top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: black;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-control {
+            color: #000; /* Set text color to black within the form */
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="row justify-content-center align-items-center" style="height: 60vh; margin-top: 20vh;">
+        <div class="text-center">
+            <h1>Welcome to My Project</h1>
+            <div class="mt-3">
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/registration_page" class="btn btn-secondary">Register</a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    
+
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

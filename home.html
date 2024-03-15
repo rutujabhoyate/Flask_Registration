@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>All Users</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>ZIP</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.delegate_name }}</td>
+                    <td>{{ user.delegate_email }}</td>
+                    <td>{{ user.delegate_country }}</td>
+                    <td>{{ user.delegate_city }}</td>
+                    <td>{{ user.delegate_state }}</td>
+                    <td>{{ user.delegate_zip }}</td>
+                    <td>
+                        
+                        <a href="{{ url_for('update', user_id=user.id) }}">Update</a>
+                        <a href="#" onclick="deleteUser({{ user.id }})">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <!-- Logout Button -->
+        <a href="{{ url_for('logout') }}" class="btn btn-secondary mt-3">Logout</a>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function deleteUser(userId) {
+        if (confirm('Are you sure you want to delete this user?')) {
+            fetch(`/delete/${userId}`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('User deleted successfully.');
+                    window.location.reload(); // Refresh the page to reflect the changes
+                } else {
+                    alert('Failed to delete user.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting user.');
+            });
+        }
+    }
+</script>
+{% endblock %}
+
+
+

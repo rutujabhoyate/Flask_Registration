@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="mt-5">
+    
+    <div class="row justify-content-center align-items-center" style="height: 60vh; margin-top: 20vh;">
+        <div class="col-md-6">
+            <h2>Login</h2>
+            <form id="loginForm" method="post" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="delegate_email">Email</label>
+                    <input type="email" class="form-control" id="delegate_email" name="delegate_email" required>
+                    <label for="delegate_passcode">Password</label>
+
+                       <!-- Placeholder for password reset link -->
+                       <a href="{{ url_for('password_reset') }}">Forgot Password?</a>
+
+                    <input type="password" class="form-control" id="delegate_passcode" name="delegate_passcode" required>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                            {% if category == 'error' %}
+                                <small class="text-danger">{{ message }}</small>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function () {
+                var form = document.getElementById('loginForm');
+                var formData = new FormData(form);
+
+                fetch("/login", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/home";
+                    } else {
+                        console.error("login failed:", response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during login:", error);
+                });
+            });
+        }
+    });
+</script>
+
+{% endblock %}
+
+
+
